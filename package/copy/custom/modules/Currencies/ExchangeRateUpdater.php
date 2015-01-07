@@ -5,8 +5,9 @@
  * package designed to ease the process of updating active currencies exchange
  * rates with the help of external data sources.
  *
- * Copyright (c) 2012 João Morais
- * http://github.com/jcsmorais/currencies-exchange-rate-updater
+ * Copyright (c) 2012 João Morais and 
+ *               2014 Kristofer Tingdahl (only minor changes)
+ * http://github.com/tingdahl/currencies-exchange-rate-updater
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -44,39 +45,35 @@ class ExchangeRateUpdater {
     }
 
     /**
-     * Retrieve latest exchange rates.
+     * Retrieve latest exchange rates from ECB.
+     * API given by: https://www.ecb.europa.eu/stats/exchange/eurofxref/html/index.en.html
      *
      * @param array $settings
-     *   Supported values are:
-     *   <ul>
-     *     <li>'appId' string with Open Exchange Rates APP Id.</li>
-     *     <li>'secureConnection' bool, true if latest rates should be retrieves
-     *   through a secure connection..</li>
-     *     <li>'defaultIso4217' string, iso4217 value of the default currency
-     *   used by Sugar.</li>
-     *   </ul>
+     *    Not used. Kept to keep code compatible with base functionality.
      *
      * @return array of iso4217 values as keys and latest rates as values, who
      * match the iso4217 values of $currencies.
      */
-    public static function getLatestRates(array $settings)
+    public static function getLatestRates( array $settings )
     {
-        $rates = new \OpenExchangeRates\Rates\Latest(
-            $settings['appId'],
-            $settings['secureConnection']
-        );
-
-        $rates->fetch();
-
-        if ($settings['defaultIso4217'] === $rates->getBase()) {
-            return $rates->getRates();
-        }
-
         $latestRates = array();
-        foreach ($rates->getRates() as $iso4217 => $rate) {
-            $rate *= ($rates->getBaseRate() / $rates->getRateByIso4217($settings['defaultIso4217']));
-            $latestRates[$iso4217] = $rate;
-        }
+        $defaultIso4217 = SugarConfig::getInstance()->get('default_currency_iso4217');
+	if ( $defaultIso4217=='EUR' )
+	{
+	    $XMLContent =
+		file("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+
+	    foreach($XMLContent as $line)
+	    {
+		if(preg_match("/currency='([[:alpha:]]+)'/",$line,$iso4217))
+		{
+		    if(preg_match("/rate='([[:graph:]]+)'/",$line,$rate))
+		    {
+			$latestRates[$iso4217[1]] = $rate[1];
+		    }
+		}
+	    }
+	}
 
         return $latestRates;
     }
