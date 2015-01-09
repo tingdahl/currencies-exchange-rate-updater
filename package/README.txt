@@ -11,7 +11,6 @@ Currently two different workflows are supported who enable an easy management of
 
 Requirements
 ------------
-* Open Exchange Rates library for SugarCRM (http://github.com/jcsmorais/open-exchange-rates-lib-for-sugarcrm)
 * SugarCRM 6.3+
 
 
