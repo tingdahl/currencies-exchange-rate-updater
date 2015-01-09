@@ -7,7 +7,7 @@
  *
  * Copyright (c) 2012 João Morais and 
  *               2014 Kristofer Tingdahl (only minor changes)
- * http://github.com/tingdahl/currencies-exchange-rate-updater
+ * http://github.com/jcsmorais/currencies-exchange-rate-updater
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
