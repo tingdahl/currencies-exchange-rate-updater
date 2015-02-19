@@ -69,7 +69,7 @@ class ExchangeRateUpdater {
 		{
 		    if(preg_match("/rate='([[:graph:]]+)'/",$line,$rate))
 		    {
-			$latestRates[$iso4217[1]] = $rate[1];
+			$latestRates[$iso4217[1]] = (float) $rate[1];
 		    }
 		}
 	    }

@@ -33,17 +33,12 @@ $manifest = array(
     ),
     'author' => 'João Morais',
     'description' => 'Currencies Exchange Rate Updater is a SugarCRM package designed to ease the process of updating active currencies exchange rates with the help of external data sources.',
-    'dependencies' => array(
-        array(
-            'id_name' => 'oer',
-            'version' => '0.0.1'
-        )
-    ),
+    'dependencies' => array(),
     'is_uninstallable' => true,
     'name' => 'Currencies Exchange Rate Updater',
     'published_date' => '2012-10-30',
     'type' => 'module',
-    'version' => '0.0.1'
+    'version' => '0.0.2'
 );
 
 $installdefs = array(
